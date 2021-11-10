@@ -1,0 +1,11 @@
+numpy
+pandas
+wandb
+sklearn
+scikit-learn
+seaborn
+matplotlib
+albumentations
+pillow
+tqdm
+torchinfo
