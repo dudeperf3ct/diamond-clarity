@@ -1,0 +1,7 @@
+dataset/
+checkpoints/
+wandb/
+**/*.pth
+**/__pycache__
+.vscode
+**/*.log
