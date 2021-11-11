@@ -36,7 +36,7 @@ class ImageClassifierDataset(Dataset):
             if self.transform is not None:
                 img = self.transform(image=img)["image"]
             images.append(img)
-        #shuffle(images)
+        # shuffle(images)
         if self.lbls is not None:
             # N,C​,D,H,W
             return torch.stack(images, 0).permute(1,0,2,3), self.lbls[idx]

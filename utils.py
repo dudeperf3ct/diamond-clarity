@@ -67,7 +67,9 @@ def datasets_to_df(ds_path: str):
     with open(ds_path, mode='rb') as f:
         ds = pickle.load(f)
     ds = ds.reset_index()
-    data = ds[['SKU', 'clarity']]
+    ds = ds[ds['er.Mike'].notna()]
+    ds['er.Mike'] = ds['er.Mike'].astype('string')
+    data = ds[['SKU', 'er.Mike']]
     return pd.DataFrame(data.values, columns=["file", "label"])
 
 

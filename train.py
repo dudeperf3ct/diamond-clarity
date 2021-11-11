@@ -284,7 +284,7 @@ class ClassifierModel:
         if self.num_classes <= 2:
             criterion = nn.BCEWithLogitsLoss(weight=torch.from_numpy(cws).float()).to(device)
         else:
-            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float()).to(device)
+            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float(), label_smoothing=0.1).to(device)
         optimizer = self._get_optimizers(t_parameters)
         scheduler = self._get_scheduler(optimizer, train_loader_length)
         if is_kfold:
@@ -331,7 +331,7 @@ class ClassifierModel:
         if self.num_classes <= 2:
             criterion = nn.BCEWithLogitsLoss(weight=torch.from_numpy(cws).float()).to(device)
         else:
-            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float()).to(device)
+            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float(), label_smoothing=0.1).to(device)
         optimizer = self._get_optimizers(t_parameters)
         scheduler = self._get_scheduler(optimizer, train_loader_length)
         trainer = Trainer(model=self.net, dataloaders=dataloaders_dict, num_classes=self.num_classes,
@@ -399,7 +399,7 @@ class ClassifierModel:
         if self.num_classes <= 2:
             criterion = nn.BCEWithLogitsLoss(weight=torch.from_numpy(cws).float()).to(device)
         else:
-            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float()).to(device)
+            criterion = nn.CrossEntropyLoss(weight=torch.from_numpy(cws).float(), label_smoothing=0.1).to(device)
         test_model(self.save_model_path, val_loader, criterion, self.num_classes, self.classes, device, self.use_wandb,
                    vis_prediction, self.means, self.stds, is_test)
 
