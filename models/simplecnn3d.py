@@ -45,9 +45,51 @@ class Simple3dCNN(nn.Module):
         # # print(x.size())
         return x
 
+class CNNModel(nn.Module):
+    def __init__(self):
+        super(CNNModel, self).__init__()
+        
+        self.conv_layer1 = self._conv_layer_set(3, 32)
+        self.pool = nn.AdaptiveAvgPool3d(4)
+        # self.conv_layer2 = self._conv_layer_set(64, 64)
+        self.fc1 = nn.Linear(2048, 128)
+        self.fc = nn.Linear(128, 100)
+        self.relu = nn.LeakyReLU()
+        # self.batch = nn.BatchNorm1d(128)
+        self.drop = nn.Dropout(p=0.15)        
+        
+    def _conv_layer_set(self, in_c, out_c):
+        conv_layer = nn.Sequential(
+        nn.Conv3d(in_c, out_c, kernel_size=(3, 3, 3), padding=0),
+        nn.LeakyReLU(),
+        nn.MaxPool3d((2, 2, 2)),
+        )
+        return conv_layer
+    
+
+    def forward(self, x):
+        # print(x.size())
+        out = self.conv_layer1(x)
+        # print(out.size())
+        out = self.pool(out)
+        # print(out.size())
+        out = out.view(out.size(0), -1)
+        # print(out.size())
+        out = self.fc1(out)
+        # print(out.size())
+        out = self.relu(out)
+        # print(out.size())
+        # out = self.batch(out)
+        out = self.drop(out)
+        # print(out.size())
+        out = self.fc(out)
+        # print(out.size())
+        return out
+
 
 # if __name__ == '__main__':
 #     d_in = torch.randn(1, 3, 6, 384, 384)
-#     m = Simple3dCNN()
+#     # m = Simple3dCNN()
+#     m = CNNModel()
 #     print(m)
 #     print(m(d_in).shape)

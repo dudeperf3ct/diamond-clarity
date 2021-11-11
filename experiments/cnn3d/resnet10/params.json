@@ -2,13 +2,13 @@
     "seed": 42,
     "num_workers": 2,
 
-    "learning_rate": 3e-3,
+    "learning_rate": 5e-3,
     "batch_size": 1,
     "epochs": 15,
-    "test_split_ratio": 0.1,
+    "test_split_ratio": 0.05,
     "num_classes": 3,
     "folds": -1,
-    "embed_size": 256,
+    "embed_size": 128,
 
     "input_channels": 3,
     "width": 384,

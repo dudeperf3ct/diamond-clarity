@@ -1,6 +1,6 @@
 ## Diamond Clarity Classification
 
-There are 3 classes present in the dataset. Alost equal distribution.
+There are 3 classes present in the dataset.
 
 ## Installation
 
@@ -31,20 +31,21 @@ We use a lot of SOTA approaches like OneCycleLR, AdamW, FP16 training, Stratifie
 
 Experiments can be tracked here : https://wandb.ai/dudeperf3ct/cnn3d
 
-Analysis : Poor performance across all models. Performace is slightly better than random chance.
+Analysis : Poor performance across all models. Performace is slightly better than majority class prediction.
 
-| ![](diagrams/legend.png) | ![](diagrams/confusion_matrix.png) |
-| :----------------------: | ---------------------------------- |
+![](diagrams/legend.png)
 
+![](diagrams/confusion_matrix.png)
 
+![](diagrams/val_acc.png)
 
 - We overfit the model with 3 samples, only `custom_simple_cnn3d` overfits the 3 samples of each class. Other 2 model fail to overfit.
 - The depth is very small (6 in our case)
 - CNN 3d focus only on spatial features
 - Since we are training from scratch having more data is always helpful.
-- The above confusion matrix shows that most models are predicting the majority of class to be `VS2`. 
-- Models like`resnet18` have all predictions as one class
-- `custom_simple_cnn3d` did not predict `SI1` class at all and same case with `resnet10` not predicting one class `SI2` at all.
+- The above confusion matrix shows that most models are predicting the majority of class to be `0`. 
+- All models fail to predict `0.5` class
+- `resnet10` did not predict `1.0` class at all.
 
 
 ​    
