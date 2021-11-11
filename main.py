@@ -14,7 +14,7 @@ if __name__ == "__main__":
     classifier.train(train_data, val_data)
     print("=" * 80)
     checkpoint_path = os.path.join(classifier.model_dir, classifier.model_name)
-    classifier.model = keras.models.load_model(checkpoint_path+f'/{classifier.model_name}.h5')
+    classifier.model = keras.models.load_model(checkpoint_path+'.h5')
     # test evaluate method
     classifier.evaluate(val_data)
     print("="*80)
