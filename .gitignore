@@ -1,7 +1,7 @@
 dataset/
 checkpoints/
 wandb/
-**/*.pth
+**/*.h5
 **/__pycache__
 .vscode
 **/*.log

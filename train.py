@@ -4,24 +4,28 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 import json
-from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import class_weight
+import matplotlib.pyplot as plt
 
 import tensorflow as tf
 from tensorflow import keras
 
 from models import cnn3d
-from vis import plot_curves
+from vis import plot_cm, plot_curves
+import wandb
+from wandb.keras import WandbCallback
 
-
+epochs = 15
 batch_size = 1
-split_ratio = 0.1
+split_ratio = 0.05
 lr = 0.0001
 height = width = 384
 depth = 6
 channels = 3
 random_seed = 42
+use_wandb = True
 
 
 def train_preprocessing(images):
@@ -37,7 +41,7 @@ def valid_preprocessing(images):
 
 class ClarityClassifier:
 
-    def __init__(self, dataset_path, root_dir, model_name, model_dir) -> None:
+    def __init__(self, experiment, dataset_path, root_dir, model_name, model_dir) -> None:
         self.dataset_path = dataset_path
         self.root_dir = root_dir
         self.model_dir = model_dir
@@ -48,7 +52,11 @@ class ClarityClassifier:
         self.batch_size = batch_size
         self.split_ratio = split_ratio
         self.lr = lr
+        self.epochs = epochs
         self.random_seed = random_seed
+        self.use_wandb = use_wandb
+        if self.use_wandb:
+            wandb.init(project=experiment)
 
     def get_model(self, model_name):
         if model_name == 'cnn3d':
@@ -168,22 +176,44 @@ class ClarityClassifier:
             optimizer=keras.optimizers.Adam(learning_rate=lr_schedule),
             metrics=["acc"],
         )
-
         # Define callbacks.
         checkpoint_cb = keras.callbacks.ModelCheckpoint(
-            f"{self.model_name}.h5", save_best_only=True
+            self.model_dir + f"/{self.model_name}.h5", save_best_only=True
         )
         early_stopping_cb = keras.callbacks.EarlyStopping(monitor="val_acc", patience=15)
 
+        callbacks = [checkpoint_cb, early_stopping_cb]
+        if use_wandb:
+            callbacks.append(WandbCallback())
+
         # Train the model, doing validation at the end of each epoch
-        epochs = 5
         self.model.fit(
             train_dataset,
             validation_data=validation_dataset,
-            epochs=epochs,
+            epochs=self.epochs,
             shuffle=True,
             verbose=2,
-            callbacks=[checkpoint_cb, early_stopping_cb],
+            callbacks=callbacks,
         )
 
-        plot_curves(self.model)
+        fig = plot_curves(self.model)
+        plt.show()
+        if self.use_wandb:
+            wandb.log({"img": [wandb.Image(fig, caption=f"{self.model_name}_curves")]})
+
+    def evaluate(self, dataset):
+        y_true, y_pred = [], []
+
+        for image_batch, label_batch in dataset:
+            y_true.append(label_batch)
+            preds = self.model.predict(image_batch)
+            y_pred.append(np.argmax(preds, axis = - 1))
+
+        # convert the true and predicted labels into tensors
+        correct_labels = tf.concat([item for item in y_true], axis = 0)
+        predicted_labels = tf.concat([item for item in y_pred], axis = 0)
+
+        fig = plot_cm(correct_labels, predicted_labels, self.classes)
+        plt.show(fig)
+        if self.use_wandb:
+            wandb.log({"img": [wandb.Image(fig, caption=f"{self.model_name}_confusion_matrix")]})
