@@ -17,7 +17,7 @@
     "stds": [0.14612580442601508, 0.14797858700495264, 0.15152898017083147],
 
     "root_dir": "dataset/round_all/all",
-    "save_model_path": "experiments/cnn3d/resnet10/models/simple_cnn3d.pth",
+    "save_model_path": "experiments/cnn3d/simple_cnn3d/models/simple_cnn3d.pth",
     "trained_model_path": null,
 
     "model_name": "simple_cnn3d",
