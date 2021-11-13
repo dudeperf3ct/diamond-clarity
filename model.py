@@ -2,7 +2,7 @@ import copy
 import torch
 import torch.nn as nn
 
-from models import resnet, simplecnn3d
+from models import resnet, simplecnn3d, cnnlstm
 from torchinfo import summary
 
 
@@ -81,7 +81,8 @@ def build_models(
     Returns:
         model : A pytorch model
     """
-    supported_models = ['resnet10', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'resnet200', 'simple_cnn3d']
+    supported_models = ['resnet10', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 
+                        'resnet152', 'resnet200', 'simple_cnn3d', 'cnnlstm_resnet18', 'cnnlstm_resnet50']
     model = None
     if model_name in supported_models:
         if model_name == 'resnet10':
@@ -90,6 +91,8 @@ def build_models(
             model = resnet.resnet18(sample_size=384, sample_duration=6)
         if model_name == 'simple_cnn3d':
             model = simplecnn3d.Simple3dCNN()
+        if 'cnnlstm' in model_name:
+            model = cnnlstm.CNNLSTM(model_name.split('_')[-1])
 
         set_parameter_requires_grad(model, feature_extract, num_ft_layers)
         num_ftrs = model.fc.in_features

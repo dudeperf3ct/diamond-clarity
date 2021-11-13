@@ -4,8 +4,8 @@ from train import ClassifierModel
 if __name__ == '__main__':
     ################################
     # Model training and evaluation
-    model_dir = "experiments/cnn3d/simple_cnn3d"
-    experiment = "cnn3d"
+    model_dir = "experiments/cnnlstm/resnet18"
+    experiment = "cnnlstm"
     model = ClassifierModel(model_dir, experiment)
     train_df = model.prepare_df("dataset/round_all/all/diamonds_db.p")
     # perform k-fold training
