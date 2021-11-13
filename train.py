@@ -19,7 +19,7 @@ import wandb
 from wandb.keras import WandbCallback
 
 epochs = 15
-batch_size = 1
+batch_size = 6
 split_ratio = 0.05
 lr = 0.0001
 height = width = 384
