@@ -5,7 +5,7 @@ sklearn
 scikit-learn
 seaborn
 matplotlib
-albumentations
+albumentations==0.4.6
 pillow
 tqdm
 torchinfo
