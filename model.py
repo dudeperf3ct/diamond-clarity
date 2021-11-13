@@ -44,7 +44,8 @@ def _create_classifier(num_ftrs: int, embedding_size: int, num_classes: int):
     """
     head = nn.Sequential(
         nn.Linear(num_ftrs, embedding_size),
-        nn.Linear(embedding_size, num_classes)
+        nn.Linear(embedding_size, num_classes),
+        # nn.Sigmoid()
     )
     return head
 

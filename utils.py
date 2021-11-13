@@ -260,7 +260,7 @@ def get_train_transforms(height, width, means, stds):
             A.CenterCrop(height, width, cv2.INTER_NEAREST),
             A.HorizontalFlip(p=0.5),
             A.GaussNoise(p=0.2),
-            A.Perspective(p=0.5),
+            # A.Perspective(p=0.5),
             A.Normalize(mean=means, std=stds),
             ToTensorV2()
         ]

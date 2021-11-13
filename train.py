@@ -172,7 +172,7 @@ class ClassifierModel:
                 stratify=y
             )
         # check if model is overfitting
-        train_x, val_x, train_y, val_y = train_x[:3], val_x[:1], train_y[:3], val_y[:1]
+        # train_x, val_x, train_y, val_y = train_x[:3], val_x[:1], train_y[:3], val_y[:1]
         logging.info(
             f"Training shape: {train_x.shape}, {train_y.shape}, {np.unique(train_y, return_counts=True)}"
         )
