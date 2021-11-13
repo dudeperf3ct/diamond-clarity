@@ -27,7 +27,7 @@ def cnn3d(width=384, height=384, depth=6, channels=3):
     model.add(layers.Dense(128))
     model.add(layers.BatchNormalization())
     model.add(layers.Activation('relu'))
-    model.add(layers.Dense(3, activation='softmax'))
+    model.add(layers.Dense(1, activation='sigmoid'))
     return model
 
 

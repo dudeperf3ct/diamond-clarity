@@ -7,6 +7,7 @@ import json
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import class_weight
+from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 
 import tensorflow as tf
@@ -68,6 +69,7 @@ class ClarityClassifier:
             ds = pickle.load(f)
         ds = ds.reset_index()
         ds = ds[ds['er.Mike'].notna()]
+        ds.loc[ds['er.Mike'] == 0.5, 'er.Mike'] = 0
         ds['er.Mike'] = ds['er.Mike'].astype('string')
         data = ds[['SKU', 'er.Mike']]
         return pd.DataFrame(data.values, columns=["fname", "label"])
@@ -169,12 +171,14 @@ class ClarityClassifier:
         # Compile model.
         initial_learning_rate = self.lr
         lr_schedule = keras.optimizers.schedules.ExponentialDecay(
-            initial_learning_rate, decay_steps=100000, decay_rate=0.96, staircase=True
+            initial_learning_rate, decay_steps=10, decay_rate=0.96, staircase=True
         )
+        loss = tf.keras.losses.BinaryCrossentropy(from_logits=False, label_smoothing=0.1, axis=-1, name='binary_crossentropy')
+
         self.model.compile(
-            loss="sparse_categorical_crossentropy",
+            loss=loss,
             optimizer=keras.optimizers.Adam(learning_rate=lr_schedule),
-            metrics=["acc"],
+            metrics=["acc", tf.keras.metrics.Precision(), tf.keras.metrics.Recall()],
         )
         # Define callbacks.
         checkpoint_cb = keras.callbacks.ModelCheckpoint(
@@ -207,11 +211,13 @@ class ClarityClassifier:
         for image_batch, label_batch in dataset:
             y_true.append(label_batch)
             preds = self.model.predict(image_batch)
-            y_pred.append(np.argmax(preds, axis = - 1))
+            y_pred.append((preds > 0.5).astype('int32'))
 
         # convert the true and predicted labels into tensors
         correct_labels = tf.concat([item for item in y_true], axis = 0)
         predicted_labels = tf.concat([item for item in y_pred], axis = 0)
+
+        print(classification_report(correct_labels, predicted_labels, target_names=self.classes))
 
         fig = plot_cm(correct_labels, predicted_labels, self.classes)
         plt.show(fig)

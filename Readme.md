@@ -2,7 +2,7 @@
 
 There are 3 classes present in the dataset. Not equal distribution.
 
-Classes : [0, 0.5, 1] -> [233,  42, 225]
+Classes : [0, 1] -> [275, 225]. The baseline accuracy of model will be 55%.
 
 ## Installation
 
