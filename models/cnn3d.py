@@ -1,5 +1,5 @@
 from tensorflow.keras import layers
-from keras.models import Sequential
+from tensorflow.keras.models import Sequential
 
 def cnn3d(width=384, height=384, depth=6, channels=3):
     """Build a 3D convolutional neural network model."""
@@ -32,5 +32,5 @@ def cnn3d(width=384, height=384, depth=6, channels=3):
 
 
 # if __name__ == '__main__':
-#     m = cnn3d(384, 284, 6, 3)
+#     m = cnn3d(384, 384, 6, 3)
 #     print(m.summary())

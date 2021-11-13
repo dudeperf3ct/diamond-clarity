@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 
-from models import cnn3d
+from models import cnn3d, convlstm 
 from vis import plot_cm, plot_curves
 import wandb
 from wandb.keras import WandbCallback
@@ -62,6 +62,8 @@ class ClarityClassifier:
     def get_model(self, model_name):
         if model_name == 'cnn3d':
             self.model = cnn3d.cnn3d(width, height, depth, channels)
+        if model_name == 'convlstm':
+            self.model = convlstm.convlstm(depth, height, width, channels)
         self.model.summary()
 
     def load_dataset(self):
