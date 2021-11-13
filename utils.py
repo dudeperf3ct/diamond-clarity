@@ -14,7 +14,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import albumentations as A
-from albumentations.pytorch import ToTensorV2
+from albumentations.pytorch.transforms import ToTensorV2
 import torch
 import torch.nn.functional as F
 
@@ -68,6 +68,7 @@ def datasets_to_df(ds_path: str):
         ds = pickle.load(f)
     ds = ds.reset_index()
     ds = ds[ds['er.Mike'].notna()]
+    ds.loc[ds['er.Mike'] == 0.5, 'er.Mike'] = 0
     ds['er.Mike'] = ds['er.Mike'].astype('string')
     data = ds[['SKU', 'er.Mike']]
     return pd.DataFrame(data.values, columns=["file", "label"])

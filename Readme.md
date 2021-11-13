@@ -1,6 +1,8 @@
 ## Diamond Clarity Classification
 
-There are 3 classes present in the dataset.
+There are 2 classes present in the dataset.
+
+classes : [0, 1] => [275, 225]. The baseline accuracy to beat will be 55%. All models should perform better than this baseline.
 
 ## Installation
 
@@ -17,6 +19,10 @@ python main.py
 
 Inside `main.py` change `simple_cnn3d"` to either `resnet18` or `resnet10` on `line number 7`.
 
+## Notebooks
+
+Run the notebook on colab present in `notebooks` folder.
+
 ### Training
 
 We use a lot of SOTA approaches like OneCycleLR, AdamW, FP16 training, Stratified splits for 90%-10% train val dataset, logging to wandb, augmentations using albumentation library. 
@@ -31,21 +37,9 @@ We use a lot of SOTA approaches like OneCycleLR, AdamW, FP16 training, Stratifie
 
 Experiments can be tracked here : https://wandb.ai/dudeperf3ct/cnn3d
 
-Analysis : Poor performance across all models. Performace is slightly better than majority class prediction.
-
-![](diagrams/legend.png)
-
-![](diagrams/confusion_matrix.png)
-
-![](diagrams/val_acc.png)
+Analysis : 
 
 - We overfit the model with 3 samples, only `custom_simple_cnn3d` overfits the 3 samples of each class. Other 2 model fail to overfit.
-- The depth is very small (6 in our case)
-- CNN 3d focus only on spatial features
-- Since we are training from scratch having more data is always helpful.
-- The above confusion matrix shows that most models are predicting the majority of class to be `0`. 
-- All models fail to predict `0.5` class
-- `resnet10` did not predict `1.0` class at all.
 
 
 ​    
