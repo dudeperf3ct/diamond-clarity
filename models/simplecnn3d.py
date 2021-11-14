@@ -52,7 +52,7 @@ class Simple3dCNN(nn.Module):
         self.conv_layer2 = self._conv_layer_set(32, 64)
         self.conv_layer3 = self._conv_layer_set(64, 128)
         self.conv_layer4 = self._conv_layer_set(128, 512)
-        self.pool = nn.AdaptiveAvgPool3d((6, 1, 1))
+        # self.pool = nn.AdaptiveAvgPool3d((6, 1, 1))
         self.fc1 = nn.Linear(3072, 128)
         self.fc = nn.Linear(128, 100)
         self.relu = nn.ReLU()
@@ -79,7 +79,8 @@ class Simple3dCNN(nn.Module):
         # print(out.size())
         out = self.conv_layer4(out)
         # print(out.size())
-        out = self.pool(out)
+        # out = self.pool(out)
+        out = out.mean(dim=(-2, -1))  # global average pooling: https://discuss.pytorch.org/t/global-average-pooling-in-pytorch/6721/24
         # print(out.size())
         out = out.view(out.size(0), -1)
         # print(out.size())
@@ -97,7 +98,6 @@ class Simple3dCNN(nn.Module):
 
 # if __name__ == '__main__':
 #     d_in = torch.randn(1, 3, 6, 384, 384)
-#     # m = Simple3dCNN()
 #     m = Simple3dCNN()
 #     print(m)
 #     print(m(d_in).shape)
