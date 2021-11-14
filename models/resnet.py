@@ -232,3 +232,12 @@ def resnet200(**kwargs):
     """
     model = ResNet(Bottleneck, [3, 24, 36, 3], **kwargs)
     return model
+
+
+# if __name__ == '__main__':
+#     d_in = torch.randn(1, 3, 6, 384, 384)
+#     m = resnet10(sample_size=384, sample_duration=6)
+#     print(m)
+#     print(m(d_in).shape)
+#     from torchinfo import summary
+#     summary(m, (1, 3, 6, 384, 384))
