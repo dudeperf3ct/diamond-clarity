@@ -14,7 +14,7 @@ class CNNLSTM(nn.Module):
         self.resnet.fc = nn.Sequential(nn.Linear(self.resnet.fc.in_features, 256))
         self.lstm = nn.LSTM(input_size=256, hidden_size=512, num_layers=3)
         self.fc1 = nn.Linear(512, 128)
-        self.fc = nn.Linear(128, 2)
+        self.fc2 = nn.Linear(128, 2)
        
     def forward(self, x_3d):
         hidden = None
@@ -25,7 +25,7 @@ class CNNLSTM(nn.Module):
 
         x = self.fc1(out[-1, :, :])
         x = F.relu(x)
-        x = self.fc(x)
+        x = self.fc2(x)
         return x
 
 # if __name__ == '__main__':

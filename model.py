@@ -95,8 +95,9 @@ def build_models(
             model = cnnlstm.CNNLSTM(model_name.split('_')[-1])
 
         set_parameter_requires_grad(model, feature_extract, num_ft_layers)
-        num_ftrs = model.fc.in_features
-        model.fc = _create_classifier(num_ftrs, embedding_size, num_classes)
+        if not 'cnnlstm' in model_name:
+            num_ftrs = model.fc.in_features
+            model.fc = _create_classifier(num_ftrs, embedding_size, num_classes)
     else:
         print("Invalid model name, exiting...")
         exit()
@@ -106,5 +107,6 @@ def build_models(
         best_model_wts = copy.deepcopy(pretrain_model.state_dict())
         if feature_extract and num_ft_layers != -1:
             model.load_state_dict(best_model_wts)
+    
     summary(model, input_size=(1, 3, 6, 384, 384))
     return model
