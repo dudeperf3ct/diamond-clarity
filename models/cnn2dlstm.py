@@ -4,9 +4,9 @@ import torchvision.models as models
 import torch.nn.functional as F
 
 
-class CNNLSTM(nn.Module):
+class CNN2DLSTM(nn.Module):
     def __init__(self, model_name):
-        super(CNNLSTM, self).__init__()
+        super(CNN2DLSTM, self).__init__()
         if model_name == 'resnet18':
             self.resnet = models.resnet18(pretrained=True)
         if model_name == 'resnet50':
@@ -30,9 +30,9 @@ class CNNLSTM(nn.Module):
 
 # if __name__ == '__main__':
 #     d_in = torch.randn(1, 3, 6, 384, 384)
-#     m = CNNLSTM('resnet18')
+#     m = CNN2DLSTM('resnet18')
 #     # print(m)
 #     # print(m(d_in).shape)
-#     m = CNNLSTM('resnet50')
+#     m = CNN2DLSTM('resnet50')
 #     # print(m)
 #     print(m(d_in).shape)
