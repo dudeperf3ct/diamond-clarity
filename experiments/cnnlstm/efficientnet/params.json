@@ -23,8 +23,8 @@
     "model_name": "cnn2dlstm_efficientnet",
     "optimizer": "AdamW",
     "scheduler": "OneCycleLR",
-    "feature_extract": false,
-    "use_pretrain" : false,
-    "finetune_layer": -1,
+    "feature_extract": true,
+    "use_pretrain" : true,
+    "finetune_layer": 462,
     "use_wandb": true
 }
