@@ -166,9 +166,9 @@ class ClarityClassifier:
 
         print("Creating dataset")
         train_dataset, validation_dataset = self._prepare_training_generators(ds)
-        return train_dataset, validation_dataset
+        return train_dataset, validation_dataset, cws
 
-    def train(self, train_dataset, validation_dataset):
+    def train(self, train_dataset, validation_dataset, cws):
 
         # Compile model.
         initial_learning_rate = self.lr
@@ -200,6 +200,7 @@ class ClarityClassifier:
             shuffle=True,
             verbose=2,
             callbacks=callbacks,
+            class_weight = cws
         )
 
         fig = plot_curves(self.model)
