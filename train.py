@@ -62,7 +62,7 @@ class ClarityClassifier:
     def get_model(self, model_name):
         if model_name == 'cnn3d':
             self.model = cnn3d.cnn3d(width, height, depth, channels)
-        if model_name == 'convlstm':
+        if model_name == 'convlstm2d':
             self.model = convlstm2d.convlstm(depth, height, width, channels)
         self.model.summary()
 
@@ -161,7 +161,7 @@ class ClarityClassifier:
         ds['label'] = y
         with open(self.model_dir + "/class_mapping.json", "w") as fp:
             json.dump(self.class_mapping, fp)
-        cws = class_weight.compute_class_weight("balanced", classes=np.unique(ds["label"]), y=ds["label"])
+        cws = dict(zip(np.unique(ds["label"]), class_weight.compute_class_weight("balanced", classes=np.unique(ds["label"]), y=ds["label"])))
         print(f"Class weights for labels: {cws}")
 
         print("Creating dataset")
