@@ -93,7 +93,7 @@ def build_models(
             model = simplecnn3d.Simple3dCNN()
         if 'cnn2dlstm' in model_name:
             model = cnn2dlstm.CNN2DLSTM(model_name.split('_')[-1])
-            set_parameter_requires_grad(model.pretain, True, num_ft_layers)
+            set_parameter_requires_grad(model.pretain, feature_extract, num_ft_layers)
 
         if not 'cnn2dlstm' in model_name:
             set_parameter_requires_grad(model, feature_extract, num_ft_layers)
