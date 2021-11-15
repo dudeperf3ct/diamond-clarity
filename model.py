@@ -82,7 +82,7 @@ def build_models(
         model : A pytorch model
     """
     supported_models = ['resnet10', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 
-                        'resnet152', 'resnet200', 'simple_cnn3d', 'cnn2dlstm_resnet18', 'cnn2dlstm_resnet50']
+                        'resnet152', 'resnet200', 'simple_cnn3d', 'cnn2dlstm_resnet18', 'cnn2dlstm_efficientnet']
     model = None
     if model_name in supported_models:
         if model_name == 'resnet10':
@@ -93,9 +93,10 @@ def build_models(
             model = simplecnn3d.Simple3dCNN()
         if 'cnn2dlstm' in model_name:
             model = cnn2dlstm.CNN2DLSTM(model_name.split('_')[-1])
+            set_parameter_requires_grad(model.pretain, True, num_ft_layers)
 
-        set_parameter_requires_grad(model, feature_extract, num_ft_layers)
         if not 'cnn2dlstm' in model_name:
+            set_parameter_requires_grad(model, feature_extract, num_ft_layers)
             num_ftrs = model.fc.in_features
             model.fc = _create_classifier(num_ftrs, embedding_size, num_classes)
     else:
