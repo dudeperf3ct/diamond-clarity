@@ -25,6 +25,6 @@
     "scheduler": "OneCycleLR",
     "feature_extract": true,
     "use_pretrain" : false,
-    "finetune_layer": 462,
+    "finetune_layer": 762,
     "use_wandb": true
 }
