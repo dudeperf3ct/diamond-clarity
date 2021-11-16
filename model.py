@@ -2,7 +2,7 @@ import copy
 import torch
 import torch.nn as nn
 
-from models import resnet, simplecnn3d, cnn2dlstm
+from models import resnet, simplecnn3d, cnn2dlstm, cnn3dlstm
 from torchinfo import summary
 
 
@@ -21,7 +21,7 @@ def set_parameter_requires_grad(model, feature_extracting: bool, num_ft_layers: 
         if num_ft_layers != -1:
             for i, module in enumerate(model.modules()):
                 if i >= num_ft_layers:
-                    if not isinstance(module, nn.BatchNorm3d):
+                    if not (isinstance(module, nn.BatchNorm3d)) or not (isinstance(module, nn.BatchNorm2d)):
                         module.requires_grad_(True)
                 else:
                     module.requires_grad_(False)
@@ -97,10 +97,10 @@ def build_models(
             model = cnn2dlstm.CNN2DLSTM(model_name.split('_')[-1])
             set_parameter_requires_grad(model.pretain, feature_extract, num_ft_layers)
         if 'cnn3dlstm' in model_name:
-            model = cnn2dlstm.CNN2DLSTM(model_name.split('_')[-1])
+            model = cnn3dlstm.CNN3DLSTM(model_name.split('_')[-1])
             set_parameter_requires_grad(model, feature_extract, num_ft_layers)
 
-        if not 'cnn2dlstm' in model_name or not 'cnn3dlstm' in model_name:
+        if not ('cnn2dlstm' in model_name) or not ('cnn3dlstm' in model_name):
             set_parameter_requires_grad(model, feature_extract, num_ft_layers)
             num_ftrs = model.fc.in_features
             model.fc = _create_classifier(num_ftrs, embedding_size, num_classes)
