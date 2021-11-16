@@ -82,7 +82,8 @@ def build_models(
         model : A pytorch model
     """
     supported_models = ['resnet10', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 
-                        'resnet152', 'resnet200', 'simple_cnn3d', 'cnn2dlstm_resnet18', 'cnn2dlstm_efficientnet']
+                        'resnet152', 'resnet200', 'simple_cnn3d', 'cnn2dlstm_resnet18', 
+                        'cnn2dlstm_enetb2', 'cnn2dlstm_enetb5']
     model = None
     if model_name in supported_models:
         if model_name == 'resnet10':
