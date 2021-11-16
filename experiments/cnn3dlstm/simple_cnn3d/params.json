@@ -1,0 +1,30 @@
+{
+    "seed": 42,
+    "num_workers": 2,
+
+    "learning_rate": 1e-4,
+    "batch_size": 6,
+    "epochs": 25,
+    "test_split_ratio": 0.05,
+    "num_classes": 2,
+    "folds": -1,
+    "embed_size": 128,
+
+    "input_channels": 3,
+    "width": 384,
+    "height": 384,
+    "means": [0.7743833848427648, 0.7983912274706353, 0.8350704625255623],
+    "stds": [0.14612580442601508, 0.14797858700495264, 0.15152898017083147],
+
+    "root_dir": "dataset/round_all/all",
+    "save_model_path": "experiments/cnn3dlstm/simple_cnn3d/models/simple_cnn3dlstm.pth",
+    "trained_model_path": null,
+
+    "model_name": "cnn3dlstm_simplecnn3d",
+    "optimizer": "AdamW",
+    "scheduler": "OneCycleLR",
+    "feature_extract": false,
+    "use_pretrain" : false,
+    "finetune_layer": -1,
+    "use_wandb": true
+}
