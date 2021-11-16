@@ -22,9 +22,9 @@ class CNN2DLSTM(nn.Module):
        
     def forward(self, x_3d):
         hidden = None
-        for t in range(x_3d.size(1)):
+        for t in range(x_3d.size(2)):
             with torch.no_grad():
-                x = self.pretain(x_3d[:, :, t, :, :])  
+                x = self.pretain(x_3d[:, :, t, :, :])
             out, hidden = self.lstm(x.unsqueeze(0), hidden)         
 
         x = self.fc1(out[-1, :, :])
@@ -36,7 +36,7 @@ class CNN2DLSTM(nn.Module):
 #     d_in = torch.randn(1, 3, 6, 384, 384)
 #     m = CNN2DLSTM('resnet18')
 #     # print(m)
-#     # print(m(d_in).shape)
-#     m = CNN2DLSTM('resnet50')
-#     # print(m)
 #     print(m(d_in).shape)
+# #     m = CNN2DLSTM('resnet50')
+# #     # print(m)
+# #     print(m(d_in).shape)
