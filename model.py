@@ -26,13 +26,13 @@ def set_parameter_requires_grad(model, feature_extracting: bool, num_ft_layers: 
                 else:
                     module.requires_grad_(False)
         else:
-            for param in model.parameters():
+            # don't freeze last fc layer of pretrain models
+            for param in list(model.parameters())[:-2]:
                 param.requires_grad = False
     # not recommended to set feature_extracting=True when use_pretrained=True
     else:
         for param in model.parameters():
             param.requires_grad = True
-
 
 def _create_classifier(num_ftrs: int, embedding_size: int, num_classes: int):
     """Add a classifier head with 2 FC layers
@@ -109,5 +109,8 @@ def build_models(
         if feature_extract and num_ft_layers != -1:
             model.load_state_dict(best_model_wts)
     
-    summary(model, input_size=(1, 3, 6, 384, 384))
+    # for i, (name, param) in enumerate(model.named_parameters()):
+    #     print (i, name, param.requires_grad)
+
+    print(summary(model, input_size=(1, 3, 6, 384, 384)))
     return model
