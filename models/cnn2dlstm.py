@@ -10,9 +10,12 @@ class CNN2DLSTM(nn.Module):
         if model_name == 'resnet18':
             self.pretain = models.resnet18(pretrained=True)
             self.pretain.fc = nn.Sequential(nn.Linear(self.pretain.fc.in_features, 256))
-        if model_name == 'efficientnet':
+        if model_name == 'enetb2':
             self.pretain = models.efficientnet_b2(pretrained=True)
-            self.pretain.fc = nn.Sequential(nn.Linear(self.pretain.classifier[1].in_features, 256))
+            self.pretain.classifier[1] = nn.Sequential(nn.Linear(self.pretain.classifier[1].in_features, 256))
+        if model_name == 'enetb5':
+            self.pretain = models.efficientnet_b5(pretrained=True)
+            self.pretain.classifier[1] = nn.Sequential(nn.Linear(self.pretain.classifier[1].in_features, 256))
         self.lstm = nn.LSTM(input_size=256, hidden_size=512, num_layers=3)
         self.fc1 = nn.Linear(512, 128)
         self.fc2 = nn.Linear(128, 2)

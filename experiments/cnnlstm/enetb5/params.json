@@ -17,14 +17,14 @@
     "stds": [0.14612580442601508, 0.14797858700495264, 0.15152898017083147],
 
     "root_dir": "dataset/round_all/all",
-    "save_model_path": "experiments/cnnlstm/efficientnet/models/enet_cnnlstm.pth",
+    "save_model_path": "experiments/cnnlstm/efficientnet/models/enetb5_cnnlstm.pth",
     "trained_model_path": null,
 
-    "model_name": "cnn2dlstm_efficientnet",
+    "model_name": "cnn2dlstm_enetb5",
     "optimizer": "AdamW",
     "scheduler": "OneCycleLR",
     "feature_extract": true,
     "use_pretrain" : true,
     "finetune_layer": 462,
-    "use_wandb": true
+    "use_wandb": false
 }
