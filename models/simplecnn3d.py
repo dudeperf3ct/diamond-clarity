@@ -88,10 +88,10 @@ class Simple3dCNN(nn.Module):
         return out
 
 
-if __name__ == '__main__':
-    d_in = torch.randn(1, 3, 6, 384, 384)
-    m = Simple3dCNN()
-    print(m)
-    print(m(d_in).shape)
-    from torchinfo import summary
-    summary(m, (1, 3, 6, 384, 384))
+# if __name__ == '__main__':
+#     d_in = torch.randn(1, 3, 6, 384, 384)
+#     m = Simple3dCNN()
+#     print(m)
+#     print(m(d_in).shape)
+#     from torchinfo import summary
+#     summary(m, (1, 3, 6, 384, 384))
