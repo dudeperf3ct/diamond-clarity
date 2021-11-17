@@ -106,7 +106,7 @@ def build_models(
             model = cnn2dlstm.CNN2DLSTM(model_name.split('_')[-1])
             set_parameter_requires_grad(model.pretain, feature_extract, num_ft_layers)
         if 'cnn3dlstm' in model_name:
-            model = cnn3dlstm.CNN3DLSTM(model_name.split('_')[-1])
+            model = cnn3dlstm.CNN3DLSTM(model_name.split('_')[-1], 384, 6)
             set_parameter_requires_grad(model, feature_extract, num_ft_layers)
 
     else:

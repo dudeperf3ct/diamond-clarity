@@ -21,12 +21,11 @@ class CNN3DLSTM(nn.Module):
         self.fc2 = nn.Linear(128, 2)
 
     def forward(self, x):
-        # out = (1, 512, 1, 1)
         x = self.cnn_model(x)
-        # input to lstm (n, seq_len, ftrs) in lstm input_size=ftrs
+        # input to lstm (n, seq_len, ftrs) in lstm input_size=ftrs if batch_first=True
         x = x.view(x.size(0), -1, x.size(1))
         x, _ = self.lstm(x)
-        x = self.fc1(x[-1, :, :])
+        x = self.fc1(x.squeeze(1))
         x = self.fc2(x)
         return x
 
