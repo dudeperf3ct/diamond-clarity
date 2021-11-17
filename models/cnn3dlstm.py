@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from resnet import resnet10, resnet18
-from simplecnn3d import Simple3dCNN
+from .resnet import resnet10, resnet18
+from .simplecnn3d import Simple3dCNN
 
 class CNN3DLSTM(nn.Module):
     def __init__(self, model_name, sample_size, sample_duration) -> None:
