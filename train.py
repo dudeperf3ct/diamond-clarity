@@ -382,7 +382,7 @@ class ClassifierModel:
         if self.finetune_layer != -1:
             logging.info(colorstr("Start finetuning pretrained model"))
             _ = self.train_finetune(cws, train_loader_length, dataloaders_dict)
-        self.evaluate(val_loader, cws, True, False)
+        self.evaluate(val_loader, cws, False, False)
 
     def evaluate(self, val_loader, cws, vis_prediction: bool = True, is_test: bool = False):
         """

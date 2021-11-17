@@ -9,15 +9,10 @@ classes : [0, 1] => [275, 225]. The baseline accuracy to beat will be 55%. All m
 ```bash
 docker build -t dc .
 ./run_container.sh
-```
-
-Inside container, run
-
-```python
 python main.py
 ```
 
-Inside `main.py` change `simple_cnn3d"` to either `resnet18` or `resnet10` on `line number 7`.
+Inside `main.py` change the path of model_dir as requiired to either `cnn3d`, `cnnlstm` or `cnn3dlstm` and any of the submodels.
 
 ## Notebooks
 
